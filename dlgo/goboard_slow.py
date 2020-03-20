@@ -61,7 +61,7 @@ class Board():
         self._grid={}
 
     def place_stone(self,player,point):
-
+        
         
 
 
