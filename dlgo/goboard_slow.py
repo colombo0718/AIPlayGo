@@ -1,5 +1,5 @@
 import copy
-from dlgo.gotypes import Player
+from gotypes import Player
 
 class Move():
     def __init__(self,point=None,is_pass=False,is_resing=False):
@@ -25,7 +25,7 @@ class Move():
 
 class GoString():
     def __init__(self,color,stones,liberties):
-        self.color-color
+        self.color=color
         self.stones=set(stones)
         self.liberties=set(liberties)
 
@@ -61,7 +61,37 @@ class Board():
         self._grid={}
 
     def place_stone(self,player,point):
-        
+        assert self.is_on_grid(point)
+        assert self._grid.get(point) is None
+        adjacent_same_color = []
+        adjacent_opposite_color = []
+        liberties = [] 
+        for neighbor in point.neighbors():
+            if not self.is_on_grid(neighbor):
+                continue
+            neighbor_string=self._grid.get(neighbor)
+            if neighbor_string is None:
+                liberties.append(neighbor)
+            elif neighbor_string.color == player :
+                if neighbor_string not in adjacent_same_color:
+                    adjacent_same_color.append(neighbor_string)
+            else:
+                if neighbor_string not in adjacent_opposite_color :
+                    adjacent_opposite_color.append(neighbor_string)
+
+        new_string = GoString(player,[point],liberties)
+
+        for same_color_string in adjacent_same_color:
+            new_string=new_string.mergen_with(same_color_string)
+        for new_string_point in new_string.stones:
+            self._grid[new_string_point] = new_string
+        for other_color_string in adjacent_opposite_color:
+            other_color_string.remove_liberty(point)
+        for other_color_string in adjacent_opposite_color:
+            if other_color_string.num_liberties == 0 :
+                self._remove_string(other_color_string)
         
 
-
+    def _remove_string(self,string):
+        self._grid[point]=None
+        
