@@ -1,26 +1,26 @@
 import enum
-
+# 定義玩家執黑或白子
 class Player(enum.Enum):
     black = 1
     white = 2 
-
+    # 回傳玩家對手的顏色
     @property
     def other(self):
         return Player.black if self == Player.white else Player.white
 
-player=Player(2)
-print(player)
-print(player.other)
-
-
+# a = Player.black
+# print(a,a.other)
 
 from collections import namedtuple
 
 class Point(namedtuple("Point","row col")):
     def neighbors(self):
         return [
-            Points(self.row-1,self.col  ),
-            Points(self.row+1,self.col  ),
-            Points(self.row  ,self.col-1),
-            Points(self.row  ,self.col+1)
+            Point(self.row-1,self.col  ),
+            Point(self.row+1,self.col  ),
+            Point(self.row  ,self.col-1),
+            Point(self.row  ,self.col+1)
         ]
+
+# a=Point(1,1)
+# print(a,a.neighbors())
