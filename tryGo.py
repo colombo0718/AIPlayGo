@@ -1,5 +1,9 @@
 from dlgo.gotypes import *
-from dlgo.goboard_slow import *
+from dlgo.goboard import *
+from dlgo.agent.helper import * 
+from dlgo.agent.naive import * 
+from dlgo.utils import *
 
-a=Board(20,20)
+
+a=point_from_coords('A1')
 print(a)
